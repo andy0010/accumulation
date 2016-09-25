@@ -1,6 +1,6 @@
 
 <?php
-header("Content-Type:text/html; charset=utf-8");
+//header("Content-Type:text/html; charset=utf-8");
 class HashMap{
 	private  $map;
 
@@ -43,8 +43,9 @@ class HashMap{
 			$bucket['count'] = 0;
 			$bucket['pairs'] = [];
 		}
+		$key = $pair['key'];
 		$bucket['count'] = $bucket['count'] + 1;
-		$bucket['pairs'][] = $pair;
+		$bucket['pairs'][$key] = $pair;
 		return 1;
 	}	
 
@@ -56,7 +57,7 @@ class HashMap{
 			return null;
 		}
 		$pair_arr = $bucket['pairs'];
-		$pair = [];
+
 		foreach ($pair_arr as  $v) {
 			if($v['key'] == $key){
 				$pair = $v;
@@ -80,8 +81,8 @@ class HashMap{
 
 		$bucket = $this->map['buckets'][$index];
 
-		echo "in hashmap function get, the conflict_bucket:".'<br>';
-		print_r($bucket);
+//		echo "in hashmap function get, the conflict_bucket:".'<br>';
+//		print_r($bucket);
 
 		$pair =	$this->get_pair($bucket, $key);
 		
@@ -123,29 +124,34 @@ class HashMap{
 
 
 $hashmap = new HashMap(95);
-$name_arr = ['寒冰射手', '玛西亚之力 盖伦', '塔里克', '机械公敌', '皮城女警', '阿木木', '布里茨', '大发明家', '卡牌大师'];
+//$name_arr = ['寒冰射手', '玛西亚之力 盖伦', '塔里克', '机械公敌', '皮城女警', '阿木木', '布里茨', '大发明家', '卡牌大师'];
+//
+//for($i=0; $i < 108; $i++){
+//	$index = rand(0, 8);
+//	$pair = ['key' => $i, 'value' => $name_arr[$index]];
+//	$hashmap->put($pair);
+//}
 
-for($i=0; $i < 108; $i++){
-	$index = rand(0, 8);
-	$pair = ['key' => $i, 'value' => $name_arr[$index]];
-	$hashmap->put($pair);
-}
+//$conflict_bucket_arr = $hashmap->get_conflict_bucket();
 
-$conflict_bucket_arr = $hashmap->get_conflict_bucket();
+//$index = key($conflict_bucket_arr);
+//echo 'conflict_index: '.$index.'<br>';
+//echo "<pre>";
+//$key_0 = $conflict_bucket_arr[$index]['pairs'][0]['key'];
+//$pair = $hashmap->get($key_0);
+//echo "the pair whith the key is " . $key_0.' is :<br>';
+//print_r($pair);
+//echo "<br>";
+//
+//$key_1 = $conflict_bucket_arr[$index]['pairs'][1]['key'];
+//$pair = $hashmap->get($key_1);
+//echo "the pair whith the key is " . $key_1.' is :<br>';
+//print_r($pair);
 
-$index = key($conflict_bucket_arr);
-echo 'conflict_index: '.$index.'<br>';
-echo "<pre>";
-$key_0 = $conflict_bucket_arr[$index]['pairs'][0]['key'];
-$pair = $hashmap->get($key_0);
-echo "the pair whith the key is " . $key_0.' is :<br>';
-print_r($pair);
-echo "<br>";
+$hashmap->put(['key' => 1, 'value' => '塔里克']);
+$hashmap->put(['key' => 1, 'value' => '寒冰射手']);
 
-$key_1 = $conflict_bucket_arr[$index]['pairs'][1]['key'];
-$pair = $hashmap->get($key_1);
-echo "the pair whith the key is " . $key_1.' is :<br>';
-print_r($pair);
+var_dump($hashmap->get(1));
 
 
 
